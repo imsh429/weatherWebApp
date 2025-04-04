@@ -46,14 +46,13 @@ npm start
 
 기본 포트는 3000번입니다.
 
----
 
-## 외부 api
+외부 api
 네이버 지도 API: https://navermaps.github.io/maps.js.ncp/docs/
 
 기상청 단기예보 조회서비스 (공공데이터포털): https://www.data.go.kr/data/15084084/openapi.do
 
-## 📬 Backend API 연동
+📬 Backend API 연동
 버튼 또는 지도 클릭 시 다음 API로 날씨 정보를 요청합니다:
 
 GET /api/weather/temperature?lat=위도&lon=경도
@@ -61,7 +60,7 @@ GET /api/weather/precipitation?lat=위도&lon=경도
 GET /api/weather/wind?lat=위도&lon=경도
 위 API는 backend에서 처리되며, proxy 설정 또는 포트 일치를 통해 통신해야 합니다.
 
-## 💻 화면 구성 미리보기
+💻 화면 구성 미리보기
 헤더: Home, 현재기온, 24시간 강수확률, 풍량 버튼
 
 왼쪽: 날씨 요약 + 선택한 지역명
