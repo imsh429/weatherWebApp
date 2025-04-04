@@ -49,7 +49,7 @@ npm start
 ---
 
 ## 외부 api
-네이버 지도 API:
+네이버 지도 API: https://navermaps.github.io/maps.js.ncp/docs/
 
 기상청 단기예보 조회서비스 (공공데이터포털): https://www.data.go.kr/data/15084084/openapi.do
 
