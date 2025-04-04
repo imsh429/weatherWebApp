@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# 🌐 Weather Map - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> 네이버 지도와 공공데이터포털 날씨 API를 연동한 날씨 지도 웹 애플리케이션 (React + TailwindCSS)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 주요 기능
 
-### `npm start`
+- 📍 네이버 지도 기반 UI
+- 🖱️ 지도 클릭 시 위치별 날씨 정보 요청 (기온, 강수확률, 풍량)
+- 🗺️ 클릭한 지역의 행정명(시/군/구) 표시
+- 📌 마커 표시 및 위치 추적
+- 💅 Glassmorphism 디자인 적용
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧑‍💻 사용 기술
 
-### `npm test`
+| 구분 | 기술 |
+|------|------|
+| 프레임워크 | React 19 |
+| 스타일링 | Tailwind CSS 3 |
+| 지도 API | Naver Maps JavaScript API v3 |
+| 아이콘 | FontAwesome |
+| HTTP 통신 | Axios |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 📁 폴더 구조
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+frontend/ ├── public/ │ └── index.html # Naver Maps API 로딩 (with geocoder) ├── src/ │ ├── components/ │ │ └── NaverMapView.jsx # 네이버 지도 + 마커 + reverse geocoding │ ├── index.js # React 엔트리 │ ├── index.css # Tailwind 적용 │ └── App.js # 전체 UI 및 날씨 요청 로직 ├── tailwind.config.js └── package.json
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🔧 설치 및 실행 방법
 
-### `npm run eject`
+1. 의존성 설치
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+cd frontend
+npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. 개발 서버 실행
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+npm start
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+기본 포트는 3000번입니다.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 외부 api
+네이버 지도 API:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+기상청 단기예보 조회서비스 (공공데이터포털): https://www.data.go.kr/data/15084084/openapi.do
 
-### Code Splitting
+## 📬 Backend API 연동
+버튼 또는 지도 클릭 시 다음 API로 날씨 정보를 요청합니다:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+GET /api/weather/temperature?lat=위도&lon=경도
+GET /api/weather/precipitation?lat=위도&lon=경도
+GET /api/weather/wind?lat=위도&lon=경도
+위 API는 backend에서 처리되며, proxy 설정 또는 포트 일치를 통해 통신해야 합니다.
 
-### Analyzing the Bundle Size
+## 💻 화면 구성 미리보기
+헤더: Home, 현재기온, 24시간 강수확률, 풍량 버튼
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+왼쪽: 날씨 요약 + 선택한 지역명
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+오른쪽: 네이버 지도 + 마커
