@@ -9,9 +9,10 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [lat, setLat] = useState(37.5665);  // 기본 위치: 서울
+  const [lat, setLat] = useState(37.5665); // 서울
   const [lon, setLon] = useState(126.9780);
-  const [locationName, setLocationName] = useState(""); // 지역 이름 (예: 서울특별시 중구)
+  const [locationName, setLocationName] = useState("");
+  const [resetMap, setResetMap] = useState(false); // ✅ 지도 초기화 플래그
 
   // ✅ 날씨 API 요청
   const fetchWeatherData = async (type, lat, lon) => {
@@ -35,25 +36,33 @@ function App() {
     setLat(lat);
     setLon(lon);
     setLocationName(locationName);
+    setResetMap(false); // 클릭 시 초기화 모드 종료
 
     if (["temperature", "precipitation", "wind"].includes(activeView)) {
       fetchWeatherData(activeView, lat, lon);
     }
   };
 
-  // ✅ 버튼 클릭 시 뷰 전환 및 날씨 요청
+  // ✅ 버튼 클릭 시 뷰 전환
   const handleViewChange = async (view) => {
     setActiveView(view);
-    if (["temperature", "precipitation", "wind"].includes(view)) {
-      await fetchWeatherData(view, lat, lon);
-    } else {
+    if (view === "home") {
       setWeatherData(null);
+      setLocationName("");
+      setResetMap(true); // ✅ 지도 초기화
+    } else {
+      await fetchWeatherData(view, lat, lon);
     }
   };
 
   // ✅ 지도 컴포넌트 렌더링
   const renderMapContent = () => {
-    return <NaverMapView onLocationClick={handleLocationClick} />;
+    return (
+      <NaverMapView
+        onLocationClick={handleLocationClick}
+        reset={resetMap}
+      />
+    );
   };
 
   return (
@@ -63,18 +72,29 @@ function App() {
         <header className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold text-gray-800">🌐 Weather Map</h1>
 
-          {/* ✅ 버튼 */}
           <nav className="flex gap-4">
-            <button onClick={() => handleViewChange("home")} className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow">
+            <button
+              onClick={() => handleViewChange("home")}
+              className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow"
+            >
               <i className="fas fa-home mr-2"></i> Home
             </button>
-            <button onClick={() => handleViewChange("temperature")} className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow">
+            <button
+              onClick={() => handleViewChange("temperature")}
+              className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow"
+            >
               🌡 현재기온
             </button>
-            <button onClick={() => handleViewChange("precipitation")} className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow">
+            <button
+              onClick={() => handleViewChange("precipitation")}
+              className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow"
+            >
               🌧 24시간 강수확률
             </button>
-            <button onClick={() => handleViewChange("wind")} className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow">
+            <button
+              onClick={() => handleViewChange("wind")}
+              className="bg-white/70 hover:bg-white text-gray-800 font-semibold py-2 px-4 rounded-full shadow"
+            >
               🌬 풍량
             </button>
           </nav>
@@ -82,12 +102,14 @@ function App() {
 
         {/* ✅ 본문 */}
         <div className="grid grid-cols-4 gap-6">
-          {/* 왼쪽 요약 영역 */}
+          {/* 요약 정보 */}
           <aside className="col-span-1 backdrop-blur-lg bg-white/40 rounded-xl p-4 text-gray-800">
             <h2 className="text-lg font-semibold mb-2">
               날씨 요약정보
               {locationName && (
-                <span className="block text-sm text-gray-600 mt-1">📍 {locationName}</span>
+                <span className="block text-sm text-gray-600 mt-1">
+                  📍 {locationName}
+                </span>
               )}
             </h2>
 
