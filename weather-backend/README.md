@@ -25,9 +25,9 @@
 ---
 
 ## 📁 폴더 구조
-
+```
 backend/ ├── apis/ │ ├── weatherController.js # 날씨 API 처리 로직 (기온, 강수확률, 풍속) │ └── dfsConverter.js # 위경도 → 격자 좌표 변환 함수 ├── routes/ │ └── weatherRoutes.js # /api/weather 라우팅 정의 ├── testServiceKey.js # SERVICE_KEY 테스트용 ├── app.js # Express 서버 설정 ├── .env # 환경변수 (SERVICE_KEY) └── package.json
-
+```
 ---
 
 ## 🔧 설치 및 실행 방법
